@@ -1,0 +1,38 @@
+---
+- name: format filesystems
+  filesystem:
+    dev: "{{ item.dev }}"
+    fstype: "{{ item.fstype | default(disk_default_filesytem) }}"
+    opts: "{{ item.opts | default(omit) }}"
+    force: "{{ item.opts | default('no') }}"
+    resizefs: "{{ item.resizefs | default('no') }}"
+  with_items: "{{ disk_filesystems }}"
+
+- name: create mount points
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default('u=rwx,go=rx') }}"
+  with_items: "{{ disk_mounts }}"
+
+- name: mount volumes
+  mount:
+    path: "{{ item.path }}"
+    src: "{{ item.src }}"
+    fstype: "{{ item.fstype | default(disk_default_filesytem) }}"
+    opts: "{{ item.opts | default(omit) }}"
+    state: "{{ item.state | default('mounted') }}"
+    dump: "{{ item.dump | default(omit) }}"
+    passno: "{{ item.passno | default(omit) }}"
+  with_items: "{{ disk_mounts }}"
+
+- name: set mount points permissions
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default('u=rwx,go=rx') }}"
+  with_items: "{{ disk_mounts }}"

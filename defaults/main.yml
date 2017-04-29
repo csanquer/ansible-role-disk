@@ -1,0 +1,21 @@
+---
+disk_default_filesytem: ext4
+disk_filesystems: []
+  # -
+  #   dev: /dev/sda2
+  #   fstype: 'ext4'
+  #   opts:
+  #   force: no
+  #   resizefs: no
+
+disk_mounts: []
+  # -
+  #   path: /data
+  #   owner: root
+  #   group: root
+  #   mode: 'u=rwx,go=rx'
+  #   src: /dev/sda2
+  #   fstype: 'ext4'
+  #   state: mounted
+  #   dump: 0
+  #   passno: 2
