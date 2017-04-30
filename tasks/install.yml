@@ -1,4 +1,19 @@
 ---
+- name: ensure some services are stopped
+  service:
+    name: "{{ item }}"
+    state: stopped
+  with_items: "{{ disk_stopped_services }}"
+
+- name: wait for available devices
+  wait_for:
+    path: "{{ item.dev }}"
+    state: present
+    delay: "{{ item.delay | default(1) }}"
+    sleep: "{{ item.sleep | default(1) }}"
+    timeout: "{{ item.timeout | default(300) }}"
+  with_items: "{{ disk_filesystems }}"
+
 - name: format filesystems
   filesystem:
     dev: "{{ item.dev }}"
@@ -36,3 +51,19 @@
     group: "{{ item.group | default(omit) }}"
     mode: "{{ item.mode | default('u=rwx,go=rx') }}"
   with_items: "{{ disk_mounts }}"
+
+- name: create extra paths
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default('u=rwx,go=rx') }}"
+  with_items: "{{ disk_extra_paths }}"
+
+- name: restart previous stopped services
+  service:
+    name: "{{ item }}"
+    state: started
+  when: disk_restart_services
+  with_items: "{{ disk_stopped_services }}"

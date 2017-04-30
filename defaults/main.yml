@@ -1,4 +1,7 @@
 ---
+disk_restart_services: false
+disk_stopped_services: []
+
 disk_default_filesytem: ext4
 disk_filesystems: []
   # -
@@ -7,6 +10,9 @@ disk_filesystems: []
   #   opts:
   #   force: no
   #   resizefs: no
+  #   delay: 1
+  #   sleep: 1
+  #   timeout: 300
 
 disk_mounts: []
   # -
@@ -19,3 +25,10 @@ disk_mounts: []
   #   state: mounted
   #   dump: 0
   #   passno: 2
+
+disk_extra_paths: []
+  # -
+  #   path: /data/mydata
+  #   owner: root
+  #   group: root
+  #   mode: 'u=rwx,go=rx'
