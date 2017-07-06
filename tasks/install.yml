@@ -23,6 +23,16 @@
     resizefs: "{{ item.resizefs | default('no') }}"
   with_items: "{{ disk_filesystems }}"
 
+- name: wait for available network filesystems
+  wait_for:
+    host: "{{ item.host }}"
+    port: "{{ item.port }}"
+    state: "{{ item.state | default('present') }}"
+    delay: "{{ item.delay | default(5) }}"
+    sleep: "{{ item.sleep | default(1) }}"
+    timeout: "{{ item.timeout | default(300) }}"
+  with_items: "{{ disk_network_filesystems }}"
+
 - name: create mount points
   file:
     path: "{{ item.path }}"

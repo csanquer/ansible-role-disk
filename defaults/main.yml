@@ -14,6 +14,14 @@ disk_filesystems: []
   #   sleep: 1
   #   timeout: 300
 
+disk_network_filesystems: []
+  # -
+  #   host:
+  #   port: # 2049 for NFS , 445 for CIFS/SMB
+  #   delay: 5
+  #   sleep: 1
+  #   timeout: 300
+
 disk_mounts: []
   # -
   #   path: /data
