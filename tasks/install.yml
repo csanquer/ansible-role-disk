@@ -2,11 +2,13 @@
 - name: install NFS client (Debian)
   apt:
     name: nfs-common
+    update_cache: yes
   when: ansible_os_family == 'Debian'
 
 - name: install NFS client (RedHat)
   yum:
     name: nfs-utils
+    update_cache: yes
   when: ansible_os_family == 'RedHat'
 
 - name: ensure some services are stopped
