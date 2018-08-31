@@ -31,9 +31,12 @@
     dev: "{{ item.dev }}"
     fstype: "{{ item.fstype | default(disk_default_filesytem) }}"
     opts: "{{ item.opts | default(omit) }}"
-    force: "{{ item.opts | default('no') }}"
+    force: "{{ item.force | default('no') }}"
     resizefs: "{{ item.resizefs | default('no') }}"
   with_items: "{{ disk_filesystems }}"
+
+- name: refresh facts
+  setup:
 
 - name: wait for available network filesystems
   wait_for:
