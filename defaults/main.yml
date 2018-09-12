@@ -1,5 +1,6 @@
 ---
 disk_restart_services: false
+disk_services_ignore_error: false
 disk_stopped_services: []
 
 disk_default_filesytem: ext4

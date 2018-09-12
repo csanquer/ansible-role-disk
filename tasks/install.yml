@@ -16,6 +16,7 @@
     name: "{{ item }}"
     state: stopped
   with_items: "{{ disk_stopped_services }}"
+  ignore_errors: "{{ disk_services_ignore_error }}"
 
 - name: wait for available devices
   wait_for:
@@ -92,3 +93,4 @@
     state: started
   when: disk_restart_services
   with_items: "{{ disk_stopped_services }}"
+  ignore_errors: "{{ disk_services_ignore_error }}"
