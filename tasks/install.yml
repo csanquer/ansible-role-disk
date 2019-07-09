@@ -1,15 +1,23 @@
 ---
-- name: install NFS client (Debian)
+- name: install network filesystems client (Debian)
   apt:
-    name: nfs-common
+    name:
+      - nfs-common
+      - samba-client
+      - samba-common
+      - cifs-utils
     update_cache: yes
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian' and disk_network_filesystems|length > 0
 
-- name: install NFS client (RedHat)
+- name: install network filesystems client (RedHat)
   yum:
-    name: nfs-utils
+    name:
+      - nfs-utils
+      - samba-client
+      - samba-common
+      - cifs-utils
     update_cache: yes
-  when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat' and disk_network_filesystems|length > 0
 
 - name: ensure some services are stopped
   service:
