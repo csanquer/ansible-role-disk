@@ -3,6 +3,12 @@ disk_restart_services: false
 disk_services_ignore_error: false
 disk_stopped_services: []
 
+disk_samba_credentials: []
+  # -
+  #   username:
+  #   password:
+  #   path:
+
 disk_default_filesytem: ext4
 disk_filesystems: []
   # -

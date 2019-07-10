@@ -19,6 +19,16 @@
     update_cache: yes
   when: ansible_os_family == 'RedHat' and disk_network_filesystems|length > 0
 
+- name: create samba credentials files
+  template:
+    src: "smbcredential.j2"
+    dest: "{{ item.path | default('/etc/.smbcredentials_' ~ item.username) }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('u=rw,go=') }}"
+  no_log: True
+  loop: "{{ disk_samba_credentials }}"
+
 - name: ensure some services are stopped
   service:
     name: "{{ item }}"
@@ -84,6 +94,7 @@
     owner: "{{ item.owner | default(omit) }}"
     group: "{{ item.group | default(omit) }}"
     mode: "{{ item.mode | default('u=rwx,go=rx') }}"
+  when: item.fstype != 'cifs'
   with_items: "{{ disk_mounts }}"
 
 - name: create extra paths
